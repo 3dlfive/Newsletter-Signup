@@ -32,35 +32,27 @@ app.post('/', (req, res) => {
     }],
   };
   mailchimp.setConfig({
-    apiKey: "15b70457ab52edd57880cb45a7c06fba-us2",
+    apiKey: "7311a6c47b597bf070e36a3e1b3cda7f-us2",
     server: "us2",
   });
   const run = async () => {
     const response = await mailchimp.lists.batchListMembers('ac49197229', userData);
-
+//checking
     if (response.error_count > 0) {
       res.sendFile(__dirname + "/failure.html");
     } else {
       res.sendFile(__dirname + "/success.html");
     }
     console.log(response.error_count);
-    console.log(response);
-      };
+    console.log(response);};
   run();
+
 });
-
-
-
-
-
+//redirection to home page
+app.post("/failure",(req, res)=>{
+  res.redirect("/");
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000.");
 });
-
-
-//api key
-// 15b70457ab52edd57880cb45a7c06fba-us2
-
-//List id
-// ac49197229
