@@ -22,26 +22,33 @@ app.post('/', (req, res) => {
   var lName = req.body.lastName;
   var email = req.body.email;
   var userData = {
-  members: [{
-    email_address: email,
-    status: "subscribed",
-    merge_fields: {
-      FNAME: fName,
-      LNAME: lName
-    }
-  }],};
- mailchimp.setConfig({
-   apiKey: "15b70457ab52edd57880cb45a7c06fba-us2",
-   server: "us2",
- });
- const run = async () => {
-    const response = await mailchimp.lists.batchListMembers('ac49197229', userData );
-    console.log(response);
+    members: [{
+      email_address: email,
+      status: "subscribed",
+      merge_fields: {
+        FNAME: fName,
+        LNAME: lName
+      }
+    }],
   };
-  run();
+  mailchimp.setConfig({
+    apiKey: "15b70457ab52edd57880cb45a7c06fba-us2",
+    server: "us2",
+  });
+  const run = async () => {
+    const response = await mailchimp.lists.batchListMembers('ac49197229', userData);
 
-res.send("<p>Thanks for your submission</p>")
+    if (response.error_count > 0) {
+      res.sendFile(__dirname + "/failure.html");
+    } else {
+      res.sendFile(__dirname + "/success.html");
+    }
+    console.log(response.error_count);
+    console.log(response);
+      };
+  run();
 });
+
 
 
 
