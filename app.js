@@ -32,11 +32,11 @@ app.post('/', (req, res) => {
     }],
   };
   mailchimp.setConfig({
-    apiKey: "7311a6c47b597bf070e36a3e1b3cda7f-us2",
+    apiKey: "apiKey",
     server: "us2",
   });
   const run = async () => {
-    const response = await mailchimp.lists.batchListMembers('ac49197229', userData);
+    const response = await mailchimp.lists.batchListMembers('LIST_ID', userData);
     if (response.error_count > 0) {
       res.sendFile(__dirname + "/failure.html");
     } else {
