@@ -37,7 +37,6 @@ app.post('/', (req, res) => {
   });
   const run = async () => {
     const response = await mailchimp.lists.batchListMembers('ac49197229', userData);
-//checking
     if (response.error_count > 0) {
       res.sendFile(__dirname + "/failure.html");
     } else {
